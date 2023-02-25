@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:slicing_ui_pro1/model/travel_model.dart';
+import 'package:slicing_ui_pro1/pages/detail_page.dart';
 import 'package:slicing_ui_pro1/widgets/image_menu_item.dart';
 
 class TabBarViewSights extends StatefulWidget {
@@ -19,9 +20,13 @@ class _TabBarViewSightsState extends State<TabBarViewSights> {
       scrollDirection: Axis.horizontal,
       itemBuilder: (context, index) {
         var travelItem = sightTravelModels[index];
-        return ImageMenuItem(
-          imageUrl: travelItem.imageUrl,
-          title: travelItem.title,
+        return InkWell(
+          onTap: () => Navigator.of(context)
+              .pushNamed(DetailPage.routeName, arguments: travelItem),
+          child: ImageMenuItem(
+            imageUrl: travelItem.imageUrl,
+            title: travelItem.title,
+          ),
         );
       },
       itemCount: 4,

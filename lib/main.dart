@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:slicing_ui_pro1/model/travel_model.dart';
+import 'package:slicing_ui_pro1/pages/detail_page.dart';
 import 'pages/home_page.dart';
 import 'package:slicing_ui_pro1/util/theme.dart';
 
@@ -16,8 +18,21 @@ class MyApp extends StatelessWidget {
       theme: kAppLightThemeData,
       initialRoute: HomePage.routeName,
       debugShowCheckedModeBanner: false,
-      routes: {
-        HomePage.routeName: (context) => const HomePage(),
+      onGenerateRoute: (settings) {
+        switch (settings.name) {
+          case HomePage.routeName:
+            return MaterialPageRoute(
+              builder: (_) => const HomePage(),
+            );
+          case DetailPage.routeName:
+            final sight = settings.arguments as TravelModel;
+            return MaterialPageRoute(
+              builder: (_) => DetailPage(
+                model: sight,
+              ),
+            );
+        }
+        return null;
       },
     );
   }
