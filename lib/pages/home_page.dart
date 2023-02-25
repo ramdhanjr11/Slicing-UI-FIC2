@@ -1,15 +1,15 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_snake_navigationbar/flutter_snake_navigationbar.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:slicing_ui_pro1/model/travel_model.dart';
 import 'package:slicing_ui_pro1/pages/search_page.dart';
 import 'package:slicing_ui_pro1/pages/settings_page.dart';
 import 'package:slicing_ui_pro1/pages/favorite_page.dart';
+import 'package:slicing_ui_pro1/pages/tab_bar_view/tab_bar_view_adventures.dart';
+import 'package:slicing_ui_pro1/pages/tab_bar_view/tab_bar_view_sights.dart';
+import 'package:slicing_ui_pro1/pages/tab_bar_view/tab_bar_view_tours.dart';
 import 'package:slicing_ui_pro1/util/theme.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:slicing_ui_pro1/widgets/image_menu_item.dart';
 
 class HomePage extends StatefulWidget {
   static const routeName = '/home_page';
@@ -22,6 +22,7 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   int _selectedItemPosition = 0;
+  int _currentTabBarIndex = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -59,9 +60,12 @@ class _HomePageState extends State<HomePage> {
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
-              _buildTabBar(context),
+              _buildTabBar(
+                context,
+                onTap: (event) => _currentTabBarIndex = event,
+              ),
               const SizedBox(height: 32),
-              _buildTabBarView(context),
+              _buildTabBarView(context, _currentTabBarIndex),
               const SizedBox(height: 24),
               _buildSubMenuTitle(context),
               _buildSubMenuIcons(context)
@@ -71,6 +75,12 @@ class _HomePageState extends State<HomePage> {
       ),
     );
   }
+
+  List<Widget> _tabViews() => [
+        const TabBarViewSights(),
+        const TabBarViewTours(),
+        const TabBarViewAdventures(),
+      ];
 
   Padding _buildSubMenuIcons(BuildContext context) {
     return Padding(
@@ -84,7 +94,6 @@ class _HomePageState extends State<HomePage> {
               SvgPicture.asset(
                 'assets/icons/kayaking_icon.svg',
                 width: 35,
-                color: kPrimaryAppColor,
               ),
               const SizedBox(height: 16),
               Text(
@@ -183,7 +192,7 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  Widget _buildTabBarView(BuildContext context) {
+  Widget _buildTabBarView(BuildContext context, int currentTabBarIndex) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -204,27 +213,16 @@ class _HomePageState extends State<HomePage> {
         const SizedBox(height: 16),
         SizedBox(
           height: 300,
-          child: ListView.builder(
-            scrollDirection: Axis.horizontal,
-            itemBuilder: (context, index) {
-              var travelItem = sightTravelModels[index];
-              return ImageMenuItem(
-                imageUrl: travelItem.imageUrl,
-                title: travelItem.title,
-              );
-            },
-            itemCount: 4,
-          )
-              .animate()
-              .fadeIn()
-              .slideX(begin: .4, end: 0, duration: 500.ms)
-              .shimmer(duration: 3000.ms),
-        )
+          child: _tabViews()[currentTabBarIndex],
+        ),
       ],
     );
   }
 
-  Align _buildTabBar(BuildContext context) {
+  Align _buildTabBar(
+    BuildContext context, {
+    required Function(int) onTap,
+  }) {
     return Align(
       alignment: Alignment.centerLeft,
       child: TabBar(
@@ -238,6 +236,9 @@ class _HomePageState extends State<HomePage> {
         isScrollable: true,
         dividerColor: Colors.transparent,
         indicator: CircleTabIndicator(color: kPrimaryAppColor, radius: 4),
+        onTap: (value) => setState(() {
+          onTap(value);
+        }),
         tabs: const [
           Tab(
             text: 'Sights',
