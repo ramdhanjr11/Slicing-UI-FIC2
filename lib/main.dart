@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:slicing_ui_pro1/home_page.dart';
+import 'pages/home_page.dart';
 import 'package:slicing_ui_pro1/util/theme.dart';
 
 void main() {
