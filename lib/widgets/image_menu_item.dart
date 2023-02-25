@@ -25,8 +25,8 @@ class _ImageMenuItemState extends State<ImageMenuItem> {
 
     return Container(
       margin: const EdgeInsets.only(left: 24, right: 8),
-      width: 260,
-      height: 280,
+      width: 280,
+      height: 300,
       child: ClipRRect(
         borderRadius: const BorderRadius.all(Radius.circular(20)),
         child: Stack(
@@ -41,6 +41,9 @@ class _ImageMenuItemState extends State<ImageMenuItem> {
               left: 24,
               child: Text(
                 title,
+                maxLines: 1,
+                textAlign: TextAlign.start,
+                overflow: TextOverflow.ellipsis,
                 style: Theme.of(context)
                     .textTheme
                     .titleLarge!

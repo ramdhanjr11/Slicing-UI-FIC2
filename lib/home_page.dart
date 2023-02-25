@@ -1,5 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
+import 'package:flutter_snake_navigationbar/flutter_snake_navigationbar.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:slicing_ui_pro1/model/travel_model.dart';
+import 'package:slicing_ui_pro1/pages/search_page.dart';
+import 'package:slicing_ui_pro1/pages/settings_page.dart';
+import 'package:slicing_ui_pro1/pages/favorite_page.dart';
 import 'package:slicing_ui_pro1/util/theme.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:slicing_ui_pro1/widgets/image_menu_item.dart';
@@ -14,18 +20,40 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  int _selectedItemPosition = 0;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: kGreyAppColor,
-      bottomNavigationBar: _buildBottomNavigationBar(),
-      body: NestedScrollView(
-        headerSliverBuilder: (context, innerBoxIsScrolled) => [
-          _buildHeader(context),
-        ],
-        body: DefaultTabController(
-          length: 3,
-          initialIndex: 0,
+      bottomNavigationBar: Container(
+        color: Colors.white,
+        padding: const EdgeInsets.only(top: 16, bottom: 8),
+        child: _buildBottomNavigationBar(
+          selectedItemPosition: _selectedItemPosition,
+          onTap: (index) => _selectedItemPosition = index,
+        ),
+      ),
+      body: _pages(context)[_selectedItemPosition],
+    );
+  }
+
+  List<Widget> _pages(BuildContext context) => [
+        _buildHomePage(context),
+        const SearchPage(),
+        const FavoritePage(),
+        const SettingsPage(),
+      ];
+
+  Widget _buildHomePage(BuildContext context) {
+    return NestedScrollView(
+      headerSliverBuilder: (context, innerBoxIsScrolled) => [
+        _buildHeader(context),
+      ],
+      body: DefaultTabController(
+        length: 3,
+        initialIndex: 0,
+        child: SingleChildScrollView(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisAlignment: MainAxisAlignment.start,
@@ -55,6 +83,7 @@ class _HomePageState extends State<HomePage> {
               SvgPicture.asset(
                 'assets/icons/kayaking_icon.svg',
                 width: 35,
+                color: kPrimaryAppColor,
               ),
               const SizedBox(height: 16),
               Text(
@@ -104,7 +133,9 @@ class _HomePageState extends State<HomePage> {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               SvgPicture.asset(
-                'assets/icons/snoorkeling_icon.svg',
+                'assets/icons/snorkeling_icon.svg',
+                colorFilter:
+                    const ColorFilter.mode(kPrimaryAppColor, BlendMode.srcIn),
                 width: 35,
               ),
               const SizedBox(height: 16),
@@ -118,7 +149,11 @@ class _HomePageState extends State<HomePage> {
             ],
           ),
         ],
-      ),
+      ).animate().fadeIn().slideX(
+            begin: -.5,
+            end: .0,
+            duration: 500.ms,
+          ),
     );
   }
 
@@ -143,7 +178,7 @@ class _HomePageState extends State<HomePage> {
                 ),
           )
         ],
-      ),
+      ).animate().fadeIn().slideX(begin: 1, end: 0, duration: 500.ms),
     );
   }
 
@@ -159,11 +194,15 @@ class _HomePageState extends State<HomePage> {
                 .textTheme
                 .bodyMedium!
                 .copyWith(color: kTextAppColor, fontWeight: FontWeight.bold),
-          ),
+          ).animate().fadeIn().slideX(
+                begin: -.2,
+                end: .1,
+                duration: 500.ms,
+              ),
         ),
         const SizedBox(height: 16),
         SizedBox(
-          height: 280,
+          height: 300,
           child: ListView.builder(
             scrollDirection: Axis.horizontal,
             itemBuilder: (context, index) {
@@ -174,7 +213,11 @@ class _HomePageState extends State<HomePage> {
               );
             },
             itemCount: 4,
-          ),
+          )
+              .animate()
+              .fadeIn()
+              .slideX(begin: .4, end: 0, duration: 500.ms)
+              .shimmer(duration: 3000.ms),
         )
       ],
     );
@@ -205,7 +248,7 @@ class _HomePageState extends State<HomePage> {
             text: 'Adventures',
           ),
         ],
-      ),
+      ).animate().scale().slideX(duration: 500.ms, begin: -.2, end: 0),
     );
   }
 
@@ -227,90 +270,65 @@ class _HomePageState extends State<HomePage> {
                 backgroundImage: NetworkImage(
                   'https://cdn-icons-png.flaticon.com/512/4526/4526437.png',
                 ),
-              )
+              ).animate().shimmer(duration: 1000.ms)
             ],
           ),
-        ),
+        ).animate().fade().slideY(
+              begin: -.2,
+              end: 0.1,
+              curve: Curves.bounceIn,
+              duration: 1000.ms,
+            ),
       ),
     );
   }
 
-  Container _buildBottomNavigationBar() {
-    return Container(
-      height: 80,
-      decoration: const BoxDecoration(
-        color: Colors.white,
-      ),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        children: [
-          AnimatedContainer(
-            duration: const Duration(milliseconds: 2),
-            padding: const EdgeInsets.all(4),
-            decoration: const BoxDecoration(
-              shape: BoxShape.circle,
-              color: kPrimaryAppColor,
-            ),
-            child: IconButton(
-              onPressed: () {},
-              icon: const Icon(
-                Icons.home,
-                size: 30,
-                color: Colors.white,
-              ),
-            ),
+  Widget _buildBottomNavigationBar(
+      {required int selectedItemPosition, required Function(int) onTap}) {
+    SnakeShape snakeShape = SnakeShape.circle;
+
+    return SnakeNavigationBar.color(
+      behaviour: SnakeBarBehaviour.floating,
+      snakeShape: snakeShape,
+      shape: const RoundedRectangleBorder(side: BorderSide.none),
+      snakeViewColor: kPrimaryAppColor,
+      selectedItemColor:
+          snakeShape == SnakeShape.indicator ? kPrimaryAppColor : null,
+      unselectedItemColor: Colors.black38,
+      currentIndex: selectedItemPosition,
+      onTap: (value) => setState(() {
+        onTap(value);
+      }),
+      items: const [
+        BottomNavigationBarItem(
+          icon: FaIcon(
+            FontAwesomeIcons.house,
+            size: 20,
           ),
-          AnimatedContainer(
-            duration: const Duration(milliseconds: 2),
-            padding: const EdgeInsets.all(4),
-            decoration: const BoxDecoration(
-              shape: BoxShape.circle,
-              color: Colors.white,
-            ),
-            child: IconButton(
-              onPressed: () {},
-              icon: const Icon(
-                Icons.search_outlined,
-                size: 30,
-                color: kGrey2AppColor,
-              ),
-            ),
+          label: 'Home',
+        ),
+        BottomNavigationBarItem(
+          icon: FaIcon(
+            FontAwesomeIcons.search,
+            size: 20,
           ),
-          AnimatedContainer(
-            duration: const Duration(milliseconds: 2),
-            padding: const EdgeInsets.all(4),
-            decoration: const BoxDecoration(
-              shape: BoxShape.circle,
-              color: Colors.white,
-            ),
-            child: IconButton(
-              onPressed: () {},
-              icon: const Icon(
-                Icons.bookmark_outline,
-                size: 30,
-                color: kGrey2AppColor,
-              ),
-            ),
+          label: 'Search',
+        ),
+        BottomNavigationBarItem(
+          icon: FaIcon(
+            FontAwesomeIcons.bookmark,
+            size: 20,
           ),
-          AnimatedContainer(
-            duration: const Duration(milliseconds: 2),
-            padding: const EdgeInsets.all(4),
-            decoration: const BoxDecoration(
-              shape: BoxShape.circle,
-              color: Colors.white,
-            ),
-            child: IconButton(
-              onPressed: () {},
-              icon: const Icon(
-                Icons.settings_outlined,
-                size: 30,
-                color: kGrey2AppColor,
-              ),
-            ),
+          label: 'Bookmark',
+        ),
+        BottomNavigationBarItem(
+          icon: FaIcon(
+            FontAwesomeIcons.gear,
+            size: 20,
           ),
-        ],
-      ),
+          label: 'Settings',
+        ),
+      ],
     );
   }
 }

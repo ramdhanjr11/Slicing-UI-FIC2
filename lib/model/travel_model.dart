@@ -11,17 +11,17 @@ class TravelModel {
 List<TravelModel> sightTravelModels = [
   TravelModel(
     imageUrl:
-        'https://images.unsplash.com/photo-1431794062232-2a99a5431c6c?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80',
+        'https://img.freepik.com/free-vector/waterfall-cascade-jungle-forest-cartoon-landscape-river-stream-flowing-from-rocks-creek-lake-with-palm-tree-branches-around-water-jet-falling-from-stones-wild-park-vector-illustration_107791-9291.jpg?w=1380&t=st=1677319109~exp=1677319709~hmac=e17c0738751b66c42a472844c339ea787900ae13a2a71cbae3fc704aa032b979',
     title: 'Curug Cikaso',
   ),
   TravelModel(
     imageUrl:
-        'https://img.freepik.com/free-vector/gradient-mountain-landscape_52683-77407.jpg?w=1060&t=st=1677298783~exp=1677299383~hmac=c1ad14a09d62923278cc282bd922590a5a1b6fed67236e7b024cbdb29cfee96c',
-    title: 'Gunung Gede Pangrango',
+        'https://img.freepik.com/free-vector/hand-painted-nature-background_23-2148940793.jpg?w=996&t=st=1677319005~exp=1677319605~hmac=9b1bf31882187b838fc1a95c4d2153c5636c0ef7a33ebd4e1f2ea9275f4a82b5',
+    title: 'Gunung Pangrango',
   ),
   TravelModel(
     imageUrl:
-        'https://img.freepik.com/free-vector/mother-child-deer-nature-landscape_23-2148439704.jpg?w=1060&t=st=1677298816~exp=1677299416~hmac=2d73052cdabff6ab64644fd90a09a3cc494e63d78ad8d49f49736b5429076cfe',
+        'https://img.freepik.com/free-vector/colourful-gradient-spring-landscape_23-2148421877.jpg?w=996&t=st=1677319150~exp=1677319750~hmac=c806c5dd9631d479e4471901a636ea7d32641a8a8ad61cb1980c402cd5938b85',
     title: 'Bukit Teletabis',
   ),
   TravelModel(
