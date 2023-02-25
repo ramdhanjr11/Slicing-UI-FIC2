@@ -36,6 +36,7 @@ TextTheme kAppTextTheme = TextTheme(
 ThemeData kAppLightThemeData = ThemeData.light(useMaterial3: true).copyWith(
   primaryColor: kPrimaryAppColor,
   scaffoldBackgroundColor: kGreyAppColor,
+  appBarTheme: const AppBarTheme(color: kGreyAppColor),
   bottomNavigationBarTheme: const BottomNavigationBarThemeData(
     selectedIconTheme: IconThemeData(color: kPrimaryAppColor),
     unselectedIconTheme: IconThemeData(color: Colors.black26),
