@@ -13,8 +13,9 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Slicing UI PRO 1',
-      theme: kAppThemeData,
+      theme: kAppLightThemeData,
       initialRoute: HomePage.routeName,
+      debugShowCheckedModeBanner: false,
       routes: {
         HomePage.routeName: (context) => const HomePage(),
       },
