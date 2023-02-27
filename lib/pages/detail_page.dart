@@ -18,30 +18,15 @@ class DetailPage extends StatefulWidget {
 class _DetailPageState extends State<DetailPage> {
   @override
   Widget build(BuildContext context) {
+    final double height = MediaQuery.of(context).size.height;
+
     return Scaffold(
-      extendBodyBehindAppBar: true,
-      appBar: AppBar(
-        leading: GestureDetector(
-          onTap: () {
-            Navigator.of(context).pop();
-          },
-          child: _buildAppBarButton(icon: Icons.arrow_back_ios_new),
-        ),
-        actions: [
-          GestureDetector(
-            onTap: () {},
-            child: _buildAppBarButton(icon: Icons.favorite_border_outlined),
-          ),
-        ],
-        iconTheme: const IconThemeData(color: kPrimaryAppColor),
-        backgroundColor: Colors.transparent,
-      ),
       body: Stack(
         children: [
           Stack(
             children: [
               Container(
-                height: 400,
+                height: height * .5,
                 decoration: const BoxDecoration(
                   image: DecorationImage(
                     image: NetworkImage(
@@ -61,14 +46,16 @@ class _DetailPageState extends State<DetailPage> {
             ],
           ),
           DraggableScrollableSheet(
-            initialChildSize: .5,
-            minChildSize: .5,
-            maxChildSize: .9,
+            initialChildSize: .55,
+            minChildSize: .55,
+            maxChildSize: .8,
             builder: (context, scrollController) {
               return Container(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 16,
-                  vertical: 16,
+                padding: const EdgeInsets.only(
+                  top: 16,
+                  right: 16,
+                  bottom: 0,
+                  left: 16,
                 ),
                 decoration: const BoxDecoration(
                   color: kGreyAppColor,
@@ -76,49 +63,133 @@ class _DetailPageState extends State<DetailPage> {
                     top: Radius.circular(16),
                   ),
                 ),
-                child: SingleChildScrollView(
-                  controller: scrollController,
-                  child: Column(
-                    children: [
-                      _buildHeaderContain(context),
-                      const SizedBox(height: 24),
-                      Row(
+                child: Stack(
+                  children: [
+                    SingleChildScrollView(
+                      controller: scrollController,
+                      child: Column(
                         children: [
-                          Text(
-                            'Overview',
-                            style: Theme.of(context)
-                                .textTheme
-                                .bodyLarge!
-                                .copyWith(
-                                    color: kPrimaryAppColor,
-                                    fontWeight: FontWeight.bold),
+                          _buildHeaderContain(context),
+                          const SizedBox(height: 24),
+                          Row(
+                            children: [
+                              Text(
+                                'Overview',
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .bodyLarge!
+                                    .copyWith(
+                                        color: kPrimaryAppColor,
+                                        fontWeight: FontWeight.bold),
+                              ),
+                              const SizedBox(width: 24),
+                              Text(
+                                'Reviews',
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .bodyMedium!
+                                    .copyWith(
+                                        color: Colors.grey,
+                                        fontWeight: FontWeight.bold),
+                              ),
+                            ],
                           ),
-                          const SizedBox(width: 24),
-                          Text(
-                            'Reviews',
-                            style: Theme.of(context)
-                                .textTheme
-                                .bodyMedium!
-                                .copyWith(
-                                    color: Colors.grey,
-                                    fontWeight: FontWeight.bold),
+                          const SizedBox(height: 24),
+                          _buildDurationAndRatingContain(context),
+                          const SizedBox(height: 24),
+                          Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 16),
+                            child: ShaderMask(
+                              shaderCallback: (rectangle) =>
+                                  const LinearGradient(
+                                colors: [Colors.black, Colors.transparent],
+                                begin: Alignment.topCenter,
+                                end: Alignment.bottomCenter,
+                              ).createShader(
+                                Rect.fromLTRB(
+                                  0,
+                                  0,
+                                  rectangle.width,
+                                  rectangle.height,
+                                ),
+                              ),
+                              blendMode: BlendMode.dstIn,
+                              child: const Text(
+                                'There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don\'t look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn\'t anything embarrassing hidden in the middle of text. All the Lorem Ipsum generators on the Internet tend to repeat predefined chunks as necessary.',
+                                style: TextStyle(color: Colors.grey),
+                              ),
+                            ),
                           ),
                         ],
                       ),
-                      const SizedBox(height: 24),
-                      _buildDurationAndRatingContain(context),
-                      const SizedBox(height: 24),
-                      const Padding(
-                        padding: EdgeInsets.symmetric(horizontal: 16),
-                        child: Text(
-                            'There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don\'t look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn\'t anything embarrassing hidden in the middle of text. All the Lorem Ipsum generators on the Internet tend to repeat predefined chunks as necessary, making this the first true generator on the Internet. It uses a dictionary of over 200 Latin words, combined with a handful of model sentence structures, to generate Lorem Ipsum which looks reasonable. The generated Lorem Ipsum is therefore always free from repetition, injected humour, or non-characteristic words etc.'),
+                    ),
+                    Align(
+                      alignment: Alignment.bottomCenter,
+                      child: Container(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 8, vertical: 16),
+                        height: 110,
+                        child: ElevatedButton(
+                          onPressed: () {},
+                          style: ElevatedButton.styleFrom(
+                            shape: const RoundedRectangleBorder(
+                              borderRadius: BorderRadius.all(
+                                Radius.circular(16),
+                              ),
+                            ),
+                            backgroundColor: kPrimaryAppColor,
+                          ),
+                          child: Stack(
+                            children: [
+                              Align(
+                                alignment: Alignment.center,
+                                child: Text(
+                                  'Book Now',
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .titleLarge!
+                                      .copyWith(
+                                          color: Colors.white,
+                                          fontWeight: FontWeight.bold),
+                                ),
+                              ),
+                              const Align(
+                                alignment: Alignment.centerRight,
+                                child: Icon(
+                                  Icons.arrow_right_alt,
+                                  color: Colors.white,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
                       ),
-                    ],
-                  ),
+                    )
+                  ],
                 ),
               );
             },
-          )
+          ),
+          Align(
+            alignment: Alignment.topCenter,
+            child: SafeArea(
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  _buildAppBarButton(
+                    icon: Icons.arrow_back_ios_new,
+                    onTap: () {
+                      Navigator.of(context).pop();
+                    },
+                  ),
+                  _buildAppBarButton(
+                    icon: Icons.favorite_border_outlined,
+                    onTap: () {},
+                  ),
+                ],
+              ),
+            ),
+          ),
         ],
       ),
     );
@@ -129,14 +200,15 @@ class _DetailPageState extends State<DetailPage> {
       children: [
         Container(
           padding: const EdgeInsets.all(4),
-          decoration: const BoxDecoration(
-            borderRadius: BorderRadius.all(Radius.circular(8)),
+          decoration: BoxDecoration(
+            borderRadius: const BorderRadius.all(Radius.circular(8)),
             color: Colors.white,
             boxShadow: [
               BoxShadow(
-                color: kPrimaryAppColor,
-                blurRadius: 40,
-                offset: Offset(0, 8),
+                color: Colors.grey.withOpacity(0.3),
+                offset: const Offset(2, 3),
+                blurRadius: 3,
+                spreadRadius: 0.5,
               ),
             ],
           ),
@@ -170,16 +242,17 @@ class _DetailPageState extends State<DetailPage> {
         const SizedBox(width: 16),
         Container(
           padding: const EdgeInsets.all(4),
-          decoration: const BoxDecoration(
-            borderRadius: BorderRadius.all(
+          decoration: BoxDecoration(
+            borderRadius: const BorderRadius.all(
               Radius.circular(8),
             ),
             color: Colors.white,
             boxShadow: [
               BoxShadow(
-                color: kPrimaryAppColor,
-                blurRadius: 40,
-                offset: Offset(0, 8),
+                color: Colors.grey.withOpacity(0.3),
+                offset: const Offset(2, 3),
+                blurRadius: 3,
+                spreadRadius: 0.5,
               ),
             ],
           ),
@@ -335,25 +408,29 @@ class _DetailPageState extends State<DetailPage> {
     );
   }
 
-  Widget _buildAppBarButton({required IconData icon}) {
-    return Padding(
-      padding: const EdgeInsets.all(4),
-      child: Container(
-        margin: const EdgeInsets.all(4),
-        decoration: BoxDecoration(
-          shape: BoxShape.circle,
-          color: Colors.white.withOpacity(0.5),
-        ),
+  Widget _buildAppBarButton(
+      {required IconData icon, required Function() onTap}) {
+    return GestureDetector(
+      onTap: onTap,
+      child: Padding(
+        padding: const EdgeInsets.all(12),
         child: Container(
+          margin: const EdgeInsets.all(4),
           decoration: BoxDecoration(
             shape: BoxShape.circle,
-            color: Colors.white.withOpacity(0.7),
+            color: Colors.white.withOpacity(0.5),
           ),
-          margin: const EdgeInsets.all(4),
-          padding: const EdgeInsets.all(8),
-          child: Icon(
-            icon,
-            size: 18,
+          child: Container(
+            decoration: BoxDecoration(
+              shape: BoxShape.circle,
+              color: Colors.white.withOpacity(0.7),
+            ),
+            margin: const EdgeInsets.all(4),
+            padding: const EdgeInsets.all(8),
+            child: Icon(
+              icon,
+              size: 18,
+            ),
           ),
         ),
       ),
