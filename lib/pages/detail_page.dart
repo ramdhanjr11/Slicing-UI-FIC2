@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:slicing_ui_pro1/model/travel_model.dart';
 import 'package:slicing_ui_pro1/util/theme.dart';
 
@@ -19,29 +20,34 @@ class _DetailPageState extends State<DetailPage> {
   @override
   Widget build(BuildContext context) {
     final double height = MediaQuery.of(context).size.height;
+    final TravelModel item = widget.model;
 
     return Scaffold(
       body: Stack(
         children: [
           Stack(
             children: [
-              Container(
-                height: height * .5,
-                decoration: const BoxDecoration(
-                  image: DecorationImage(
-                    image: NetworkImage(
-                        'https://img.freepik.com/free-vector/waterfall-cascade-jungle-forest-cartoon-landscape-river-stream-flowing-from-rocks-creek-lake-with-palm-tree-branches-around-water-jet-falling-from-stones-wild-park-vector-illustration_107791-9291.jpg?w=1380&t=st=1677319109~exp=1677319709~hmac=e17c0738751b66c42a472844c339ea787900ae13a2a71cbae3fc704aa032b979'),
-                    fit: BoxFit.cover,
+              Hero(
+                tag: item.imageUrl,
+                child: Container(
+                  height: height * .5,
+                  decoration: BoxDecoration(
+                    image: DecorationImage(
+                      image: NetworkImage(
+                        item.imageUrl,
+                      ),
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                  child: Container(
+                    color: Colors.black.withOpacity(.16),
                   ),
                 ),
-                child: Container(
-                  color: Colors.black.withOpacity(.16),
-                ),
-              ),
+              ).animate().shimmer(duration: 1000.ms),
               Positioned(
                 bottom: 48,
                 right: 16,
-                child: _buildSelectedImages(),
+                child: _buildImageCollection(item),
               )
             ],
           ),
@@ -69,7 +75,7 @@ class _DetailPageState extends State<DetailPage> {
                       controller: scrollController,
                       child: Column(
                         children: [
-                          _buildHeaderContain(context),
+                          _buildHeaderContain(context, item),
                           const SizedBox(height: 24),
                           Row(
                             children: [
@@ -169,7 +175,7 @@ class _DetailPageState extends State<DetailPage> {
                 ),
               );
             },
-          ),
+          ).animate().fadeIn().slideY(begin: .1, end: .0, duration: 500.ms),
           Align(
             alignment: Alignment.topCenter,
             child: SafeArea(
@@ -181,11 +187,17 @@ class _DetailPageState extends State<DetailPage> {
                     onTap: () {
                       Navigator.of(context).pop();
                     },
-                  ),
+                  )
+                      .animate()
+                      .fadeIn()
+                      .slideX(begin: -.4, end: .0, duration: 500.ms),
                   _buildAppBarButton(
                     icon: Icons.favorite_border_outlined,
                     onTap: () {},
-                  ),
+                  )
+                      .animate()
+                      .fadeIn()
+                      .slideX(begin: .4, end: .0, duration: 500.ms),
                 ],
               ),
             ),
@@ -287,13 +299,13 @@ class _DetailPageState extends State<DetailPage> {
     );
   }
 
-  Row _buildHeaderContain(BuildContext context) {
+  Row _buildHeaderContain(BuildContext context, TravelModel item) {
     return Row(
       children: [
         Expanded(
           flex: 2,
           child: Text(
-            'Curug Cikaso',
+            item.title,
             style: Theme.of(context)
                 .textTheme
                 .headlineMedium!
@@ -328,7 +340,7 @@ class _DetailPageState extends State<DetailPage> {
     );
   }
 
-  Widget _buildSelectedImages() {
+  Widget _buildImageCollection(TravelModel item) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -343,10 +355,11 @@ class _DetailPageState extends State<DetailPage> {
             height: 40,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(6),
-              image: const DecorationImage(
+              image: DecorationImage(
                 fit: BoxFit.cover,
                 image: NetworkImage(
-                    'https://img.freepik.com/free-vector/waterfall-cascade-jungle-forest-cartoon-landscape-river-stream-flowing-from-rocks-creek-lake-with-palm-tree-branches-around-water-jet-falling-from-stones-wild-park-vector-illustration_107791-9291.jpg?w=1380&t=st=1677319109~exp=1677319709~hmac=e17c0738751b66c42a472844c339ea787900ae13a2a71cbae3fc704aa032b979'),
+                  item.imageCollection[0],
+                ),
               ),
             ),
           ),
@@ -363,10 +376,11 @@ class _DetailPageState extends State<DetailPage> {
             height: 40,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(6),
-              image: const DecorationImage(
+              image: DecorationImage(
                 fit: BoxFit.cover,
                 image: NetworkImage(
-                    'https://img.freepik.com/free-vector/waterfall-cascade-jungle-forest-cartoon-landscape-river-stream-flowing-from-rocks-creek-lake-with-palm-tree-branches-around-water-jet-falling-from-stones-wild-park-vector-illustration_107791-9291.jpg?w=1380&t=st=1677319109~exp=1677319709~hmac=e17c0738751b66c42a472844c339ea787900ae13a2a71cbae3fc704aa032b979'),
+                  item.imageCollection[1],
+                ),
               ),
             ),
           ),
@@ -384,10 +398,11 @@ class _DetailPageState extends State<DetailPage> {
             clipBehavior: Clip.antiAlias,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(6),
-              image: const DecorationImage(
+              image: DecorationImage(
                 fit: BoxFit.cover,
                 image: NetworkImage(
-                    'https://img.freepik.com/free-vector/waterfall-cascade-jungle-forest-cartoon-landscape-river-stream-flowing-from-rocks-creek-lake-with-palm-tree-branches-around-water-jet-falling-from-stones-wild-park-vector-illustration_107791-9291.jpg?w=1380&t=st=1677319109~exp=1677319709~hmac=e17c0738751b66c42a472844c339ea787900ae13a2a71cbae3fc704aa032b979'),
+                  item.imageCollection[2],
+                ),
               ),
             ),
             child: Container(
@@ -405,7 +420,11 @@ class _DetailPageState extends State<DetailPage> {
           ),
         ),
       ],
-    );
+    )
+        .animate()
+        .fadeIn()
+        .slideY(begin: .4, end: .0, duration: 500.ms)
+        .shimmer(duration: 1000.ms);
   }
 
   Widget _buildAppBarButton(

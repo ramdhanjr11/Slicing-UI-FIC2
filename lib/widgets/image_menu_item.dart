@@ -23,47 +23,55 @@ class _ImageMenuItemState extends State<ImageMenuItem> {
     String imageUrl = widget.imageUrl;
     String title = widget.title;
 
-    return Container(
-      margin: const EdgeInsets.only(left: 24, right: 8),
-      width: 280,
-      height: 300,
-      child: ClipRRect(
-        borderRadius: const BorderRadius.all(Radius.circular(20)),
-        child: Stack(
-          fit: StackFit.expand,
-          children: [
-            Image.network(
-              fit: BoxFit.cover,
-              imageUrl,
-            ),
-            Positioned(
-              bottom: 24,
-              left: 24,
-              child: Text(
-                title,
-                maxLines: 1,
-                textAlign: TextAlign.start,
-                overflow: TextOverflow.ellipsis,
-                style: Theme.of(context)
-                    .textTheme
-                    .titleLarge!
-                    .copyWith(fontWeight: FontWeight.bold, color: Colors.white),
-              ),
-            ),
-            Positioned(
-              top: 16,
-              right: 16,
-              child: CircleAvatar(
-                backgroundColor: Colors.white,
-                child: IconButton(
-                  color: kPrimaryAppColor,
-                  iconSize: 20,
-                  onPressed: () {},
-                  icon: const Icon(Icons.favorite_border),
+    return Hero(
+      tag: imageUrl,
+      child: Container(
+        margin: const EdgeInsets.only(left: 24, right: 8),
+        width: 280,
+        height: 300,
+        child: ClipRRect(
+          borderRadius: const BorderRadius.all(Radius.circular(20)),
+          child: Stack(
+            fit: StackFit.expand,
+            children: [
+              Container(
+                decoration: BoxDecoration(
+                  image: DecorationImage(
+                    image: NetworkImage(imageUrl),
+                    fit: BoxFit.cover,
+                  ),
+                ),
+                child: Container(
+                  color: Colors.black.withOpacity(.2),
                 ),
               ),
-            ),
-          ],
+              Positioned(
+                bottom: 24,
+                left: 24,
+                child: Text(
+                  title,
+                  maxLines: 1,
+                  textAlign: TextAlign.start,
+                  overflow: TextOverflow.ellipsis,
+                  style: Theme.of(context).textTheme.titleLarge!.copyWith(
+                      fontWeight: FontWeight.bold, color: Colors.white),
+                ),
+              ),
+              Positioned(
+                top: 16,
+                right: 16,
+                child: CircleAvatar(
+                  backgroundColor: Colors.white,
+                  child: IconButton(
+                    color: kPrimaryAppColor,
+                    iconSize: 20,
+                    onPressed: () {},
+                    icon: const Icon(Icons.favorite_border),
+                  ),
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );
