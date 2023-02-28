@@ -45,7 +45,7 @@ class _DetailPageState extends State<DetailPage> {
                 ),
               ).animate().shimmer(duration: 1000.ms),
               Positioned(
-                bottom: 48,
+                bottom: height / 14,
                 right: 16,
                 child: _buildImageCollection(item),
               )
