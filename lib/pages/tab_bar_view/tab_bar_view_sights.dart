@@ -33,7 +33,7 @@ class _TabBarViewSightsState extends State<TabBarViewSights> {
     )
         .animate()
         .fadeIn()
-        .slideX(begin: .4, end: 0, duration: 500.ms)
-        .shimmer(duration: 3000.ms);
+        .slideX(begin: .4, end: 0, duration: 300.ms)
+        .shimmer(duration: 600.ms);
   }
 }

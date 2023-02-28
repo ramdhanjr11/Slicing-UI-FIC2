@@ -27,8 +27,7 @@ class _ImageMenuItemState extends State<ImageMenuItem> {
       tag: imageUrl,
       child: Container(
         margin: const EdgeInsets.only(left: 24, right: 8),
-        width: 280,
-        height: 300,
+        width: MediaQuery.of(context).size.width / 1.4,
         child: ClipRRect(
           borderRadius: const BorderRadius.all(Radius.circular(20)),
           child: Stack(

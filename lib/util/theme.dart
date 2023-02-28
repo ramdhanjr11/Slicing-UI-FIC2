@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:slicing_ui_pro1/util/circle_tab_indicator.dart';
 
 const Color kGreyAppColor = Color.fromARGB(255, 243, 243, 243);
 const Color kGrey2AppColor = Color(0xFFD5D9E5);
@@ -40,5 +41,12 @@ ThemeData kAppLightThemeData = ThemeData.light(useMaterial3: true).copyWith(
   bottomNavigationBarTheme: const BottomNavigationBarThemeData(
     selectedIconTheme: IconThemeData(color: kPrimaryAppColor),
     unselectedIconTheme: IconThemeData(color: Colors.black26),
+  ),
+  tabBarTheme: TabBarTheme(
+    indicatorColor: kPrimaryAppColor,
+    labelColor: kPrimaryAppColor,
+    labelStyle: kAppTextTheme.titleSmall!.copyWith(fontWeight: FontWeight.bold),
+    unselectedLabelStyle: kAppTextTheme.titleSmall,
+    indicator: CircleTabIndicator(color: kPrimaryAppColor, radius: 4),
   ),
 );

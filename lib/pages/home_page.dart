@@ -62,7 +62,7 @@ class _HomePageState extends State<HomePage> {
             children: [
               _buildTabBar(
                 context,
-                onTap: (event) => _currentTabBarIndex = event,
+                onTap: (index) => _currentTabBarIndex = index,
               ),
               const SizedBox(height: 32),
               _buildTabBarView(context, _currentTabBarIndex),
@@ -88,82 +88,57 @@ class _HomePageState extends State<HomePage> {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              SvgPicture.asset(
-                'assets/icons/kayaking_icon.svg',
-                width: 35,
-              ),
-              const SizedBox(height: 16),
-              Text(
-                'KAYAKING',
-                style: Theme.of(context)
-                    .textTheme
-                    .bodySmall!
-                    .copyWith(color: Colors.grey, fontWeight: FontWeight.bold),
-              ),
-            ],
+          _buildSubMenuIcon(
+            context,
+            icon: 'assets/icons/kayaking_icon.svg',
+            title: 'KAYAKING',
           ),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              SvgPicture.asset(
-                'assets/icons/balooning_icon.svg',
-                width: 35,
-              ),
-              const SizedBox(height: 16),
-              Text(
-                'BALOONING',
-                style: Theme.of(context)
-                    .textTheme
-                    .bodySmall!
-                    .copyWith(color: Colors.grey, fontWeight: FontWeight.bold),
-              ),
-            ],
+          _buildSubMenuIcon(
+            context,
+            icon: 'assets/icons/balooning_icon.svg',
+            title: 'BALOONING',
           ),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              SvgPicture.asset(
-                'assets/icons/hiking_icon.svg',
-                width: 35,
-              ),
-              const SizedBox(height: 16),
-              Text(
-                'HIKING',
-                style: Theme.of(context)
-                    .textTheme
-                    .bodySmall!
-                    .copyWith(color: Colors.grey, fontWeight: FontWeight.bold),
-              ),
-            ],
+          _buildSubMenuIcon(
+            context,
+            icon: 'assets/icons/hiking_icon.svg',
+            title: 'HIKING',
           ),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              SvgPicture.asset(
-                'assets/icons/snorkeling_icon.svg',
-                colorFilter:
-                    const ColorFilter.mode(kPrimaryAppColor, BlendMode.srcIn),
-                width: 35,
-              ),
-              const SizedBox(height: 16),
-              Text(
-                'SNORKELING',
-                style: Theme.of(context)
-                    .textTheme
-                    .bodySmall!
-                    .copyWith(color: Colors.grey, fontWeight: FontWeight.bold),
-              ),
-            ],
+          _buildSubMenuIcon(
+            context,
+            icon: 'assets/icons/snorkeling_icon.svg',
+            title: 'SNORKELING',
           ),
         ],
       ).animate().fadeIn().slideX(
             begin: -.5,
             end: .0,
-            duration: 500.ms,
+            duration: 300.ms,
           ),
+    );
+  }
+
+  Column _buildSubMenuIcon(
+    BuildContext context, {
+    required String icon,
+    required String title,
+  }) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        SvgPicture.asset(
+          icon,
+          width: 35,
+          color: kPrimaryAppColor,
+        ),
+        const SizedBox(height: 16),
+        Text(
+          title,
+          style: Theme.of(context)
+              .textTheme
+              .bodySmall!
+              .copyWith(color: Colors.grey, fontWeight: FontWeight.bold),
+        ),
+      ],
     );
   }
 
@@ -182,13 +157,13 @@ class _HomePageState extends State<HomePage> {
           ),
           Text(
             'Show all',
-            style: Theme.of(context).textTheme.bodySmall!.copyWith(
-                  color: kPrimaryAppColor,
-                  fontWeight: FontWeight.bold,
-                ),
+            style: Theme.of(context)
+                .textTheme
+                .bodySmall!
+                .copyWith(color: kPrimaryAppColor, fontWeight: FontWeight.bold),
           )
         ],
-      ).animate().fadeIn().slideX(begin: 1, end: 0, duration: 500.ms),
+      ).animate().fadeIn().slideX(begin: 1, end: 0, duration: 300.ms),
     );
   }
 
@@ -204,15 +179,11 @@ class _HomePageState extends State<HomePage> {
                 .textTheme
                 .bodyMedium!
                 .copyWith(color: kTextAppColor, fontWeight: FontWeight.bold),
-          ).animate().fadeIn().slideX(
-                begin: -.2,
-                end: .1,
-                duration: 500.ms,
-              ),
+          ).animate().fadeIn().slideX(begin: -.2, end: .1, duration: 300.ms),
         ),
         const SizedBox(height: 16),
         SizedBox(
-          height: 300,
+          height: MediaQuery.of(context).size.height / 2.56,
           child: _tabViews()[currentTabBarIndex],
         ),
       ],
@@ -223,34 +194,23 @@ class _HomePageState extends State<HomePage> {
     BuildContext context, {
     required Function(int) onTap,
   }) {
+    const tabItems = [
+      Tab(text: 'Sights'),
+      Tab(text: 'Tours'),
+      Tab(text: 'Adventures'),
+    ];
+
     return Align(
       alignment: Alignment.centerLeft,
       child: TabBar(
-        indicatorColor: kPrimaryAppColor,
-        labelColor: kPrimaryAppColor,
         padding: const EdgeInsets.symmetric(horizontal: 8),
-        labelStyle: Theme.of(context)
-            .textTheme
-            .titleSmall!
-            .copyWith(fontWeight: FontWeight.bold),
-        isScrollable: true,
         dividerColor: Colors.transparent,
-        indicator: CircleTabIndicator(color: kPrimaryAppColor, radius: 4),
+        isScrollable: true,
         onTap: (value) => setState(() {
           onTap(value);
         }),
-        tabs: const [
-          Tab(
-            text: 'Sights',
-          ),
-          Tab(
-            text: 'Tours',
-          ),
-          Tab(
-            text: 'Adventures',
-          ),
-        ],
-      ).animate().scale().slideX(duration: 500.ms, begin: -.2, end: 0),
+        tabs: tabItems,
+      ).animate().scale().slideX(duration: 300.ms, begin: -.2, end: 0),
     );
   }
 
@@ -272,22 +232,40 @@ class _HomePageState extends State<HomePage> {
                 backgroundImage: NetworkImage(
                   'https://cdn-icons-png.flaticon.com/512/4526/4526437.png',
                 ),
-              ).animate().shimmer(duration: 1000.ms)
+              ).animate().shimmer(duration: 300.ms)
             ],
           ),
         ).animate().fade().slideY(
               begin: -.2,
               end: 0.1,
-              curve: Curves.bounceIn,
-              duration: 1000.ms,
+              duration: 300.ms,
             ),
       ),
     );
   }
 
-  Widget _buildBottomNavigationBar(
-      {required int selectedItemPosition, required Function(int) onTap}) {
+  Widget _buildBottomNavigationBar({
+    required int selectedItemPosition,
+    required Function(int) onTap,
+  }) {
     SnakeShape snakeShape = SnakeShape.circle;
+
+    BottomNavigationBarItem bottomNavItem(IconData icon, String label) {
+      return BottomNavigationBarItem(
+        icon: FaIcon(
+          icon,
+          size: 20,
+        ),
+        label: label,
+      );
+    }
+
+    List<BottomNavigationBarItem> bottomNavItems = [
+      bottomNavItem(FontAwesomeIcons.house, 'Home'),
+      bottomNavItem(FontAwesomeIcons.search, 'Search'),
+      bottomNavItem(FontAwesomeIcons.bookmark, 'Bookmark'),
+      bottomNavItem(FontAwesomeIcons.gear, 'Settings'),
+    ];
 
     return SnakeNavigationBar.color(
       behaviour: SnakeBarBehaviour.floating,
@@ -301,63 +279,7 @@ class _HomePageState extends State<HomePage> {
       onTap: (value) => setState(() {
         onTap(value);
       }),
-      items: const [
-        BottomNavigationBarItem(
-          icon: FaIcon(
-            FontAwesomeIcons.house,
-            size: 20,
-          ),
-          label: 'Home',
-        ),
-        BottomNavigationBarItem(
-          icon: FaIcon(
-            FontAwesomeIcons.search,
-            size: 20,
-          ),
-          label: 'Search',
-        ),
-        BottomNavigationBarItem(
-          icon: FaIcon(
-            FontAwesomeIcons.bookmark,
-            size: 20,
-          ),
-          label: 'Bookmark',
-        ),
-        BottomNavigationBarItem(
-          icon: FaIcon(
-            FontAwesomeIcons.gear,
-            size: 20,
-          ),
-          label: 'Settings',
-        ),
-      ],
+      items: bottomNavItems,
     );
-  }
-}
-
-class CircleTabIndicator extends Decoration {
-  final BoxPainter _painter;
-
-  CircleTabIndicator({required Color color, required double radius})
-      : _painter = _CirclePainter(color, radius);
-
-  @override
-  BoxPainter createBoxPainter([VoidCallback? onChanged]) => _painter;
-}
-
-class _CirclePainter extends BoxPainter {
-  final Paint _paint;
-  final double radius;
-
-  _CirclePainter(Color color, this.radius)
-      : _paint = Paint()
-          ..color = color
-          ..isAntiAlias = true;
-
-  @override
-  void paint(Canvas canvas, Offset offset, ImageConfiguration cfg) {
-    final Offset circleOffset =
-        offset + Offset(cfg.size!.width / 2, cfg.size!.height - radius);
-    canvas.drawCircle(circleOffset, radius, _paint);
   }
 }
