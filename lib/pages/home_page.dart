@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:ui_pro_2/models/travel_model.dart';
+import 'package:ui_pro_2/widgets/home_item_travel.dart';
 
 class HomePage extends StatefulWidget {
   static const routeName = '/home_page';
@@ -23,7 +25,16 @@ class _HomePageState extends State<HomePage> {
           child: Column(
             children: [
               _buildHeadlineSection(),
-              _buildBannerSection(height, context)
+              _buildBannerSection(context),
+              const SizedBox(height: 24),
+              ListView.builder(
+                itemBuilder: (context, index) => HomeItemTravel(
+                  travelItem: travelItems[index],
+                ),
+                itemCount: travelItems.length,
+                shrinkWrap: true,
+                primary: false,
+              ),
             ],
           ),
         ),
@@ -47,7 +58,7 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  Container _buildBannerSection(double height, BuildContext context) {
+  Container _buildBannerSection(BuildContext context) {
     return Container(
       margin: const EdgeInsets.only(left: 16, top: 16),
       height: height / 4,
