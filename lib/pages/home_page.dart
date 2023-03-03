@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:ui_pro_2/models/travel_model.dart';
+import 'package:ui_pro_2/pages/favorite_page.dart';
+import 'package:ui_pro_2/pages/search_page.dart';
 import 'package:ui_pro_2/widgets/home_item_travel.dart';
 
 class HomePage extends StatefulWidget {
@@ -14,32 +16,29 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   final EdgeInsets _appPadding = const EdgeInsets.all(16);
   late double height;
+  int _bottomNavCurrentIndex = 0;
+
+  onTapBottomNav(int index) {
+    setState(() {
+      _bottomNavCurrentIndex = index;
+    });
+  }
+
+  List<Widget> pages() => [
+        _buildHomeContent(context),
+        const SearchPage(),
+        const FavoritePage(),
+      ];
 
   @override
   Widget build(BuildContext context) {
     height = MediaQuery.of(context).size.height;
 
     return Scaffold(
-      body: SafeArea(
-        child: SingleChildScrollView(
-          child: Column(
-            children: [
-              _buildHeadlineSection(),
-              _buildBannerSection(context),
-              const SizedBox(height: 24),
-              ListView.builder(
-                itemBuilder: (context, index) => HomeItemTravel(
-                  travelItem: travelItems[index],
-                ),
-                itemCount: travelItems.length,
-                shrinkWrap: true,
-                primary: false,
-              ),
-            ],
-          ),
-        ),
-      ),
+      body: pages()[_bottomNavCurrentIndex],
       bottomNavigationBar: BottomNavigationBar(
+        currentIndex: _bottomNavCurrentIndex,
+        onTap: onTapBottomNav,
         items: const [
           BottomNavigationBarItem(
             icon: Icon(Icons.home),
@@ -54,6 +53,28 @@ class _HomePageState extends State<HomePage> {
             label: 'Bookmark',
           )
         ],
+      ),
+    );
+  }
+
+  SafeArea _buildHomeContent(BuildContext context) {
+    return SafeArea(
+      child: SingleChildScrollView(
+        child: Column(
+          children: [
+            _buildHeadlineSection(),
+            _buildBannerSection(context),
+            const SizedBox(height: 24),
+            ListView.builder(
+              itemBuilder: (context, index) => HomeItemTravel(
+                travelItem: travelItems[index],
+              ),
+              itemCount: travelItems.length,
+              shrinkWrap: true,
+              primary: false,
+            ),
+          ],
+        ),
       ),
     );
   }
