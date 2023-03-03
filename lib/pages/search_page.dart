@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:ui_pro_2/models/travel_model.dart';
 import 'package:ui_pro_2/widgets/search_item_travel.dart';
@@ -31,7 +32,7 @@ class SearchPage extends StatelessWidget {
                   ),
                 ],
               ),
-            ),
+            ).animate().fadeIn().slideX(begin: -.4, end: 0, duration: 400.ms),
             MasonryGridView.count(
               crossAxisCount: 2,
               itemCount: travelItems.length,

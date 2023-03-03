@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:ui_pro_2/models/travel_model.dart';
 
 class SearchItemTravel extends StatelessWidget {
@@ -28,7 +29,7 @@ class SearchItemTravel extends StatelessWidget {
                   fit: BoxFit.cover,
                   travelItem.imageUrl,
                 ),
-              ),
+              ).animate().shimmer(duration: 1000.ms),
               const Positioned(
                 top: 12,
                 right: 12,
@@ -70,7 +71,7 @@ class SearchItemTravel extends StatelessWidget {
             ),
           ),
         ],
-      ),
+      ).animate().fadeIn().slideX(begin: .4, end: 0, duration: 400.ms),
     );
   }
 }
