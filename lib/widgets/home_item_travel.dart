@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:ui_pro_2/models/travel_model.dart';
 
 class HomeItemTravel extends StatelessWidget {
@@ -34,7 +35,7 @@ class HomeItemTravel extends StatelessWidget {
                     fit: BoxFit.cover,
                     travelItem.imageUrl,
                   ),
-                ),
+                ).animate().shimmer(duration: 1000.ms),
               ),
               Expanded(
                 flex: 2,
@@ -73,6 +74,6 @@ class HomeItemTravel extends StatelessWidget {
           ),
         ),
       ),
-    );
+    ).animate().fadeIn().slideX(begin: -.4, end: 0, duration: 400.ms);
   }
 }

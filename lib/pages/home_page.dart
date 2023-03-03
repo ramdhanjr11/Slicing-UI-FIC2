@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:ui_pro_2/models/travel_model.dart';
 import 'package:ui_pro_2/pages/favorite_page.dart';
 import 'package:ui_pro_2/pages/search_page.dart';
@@ -131,7 +132,7 @@ class _HomePageState extends State<HomePage> {
             ),
           )
         ],
-      ),
+      ).animate().fadeIn().slideX(begin: .4, end: 0, duration: 400.ms),
     );
   }
 
@@ -152,7 +153,11 @@ class _HomePageState extends State<HomePage> {
               ),
             ),
           ],
-        ),
+        )
+            .animate()
+            .fadeIn()
+            .slideX(begin: .4, end: 0, duration: 400.ms)
+            .shimmer(duration: 400.ms),
         Padding(
           padding: _appPadding,
           child: Row(
@@ -164,12 +169,13 @@ class _HomePageState extends State<HomePage> {
                   children: [
                     Text(
                       'Plan',
-                      style:
-                          Theme.of(context).textTheme.headlineLarge!.copyWith(
-                                fontWeight: FontWeight.bold,
-                                color: Colors.black,
-                                letterSpacing: 2,
-                              ),
+                      style: Theme.of(context)
+                          .textTheme
+                          .headlineLarge!
+                          .copyWith(
+                              fontWeight: FontWeight.bold,
+                              color: Colors.black,
+                              letterSpacing: 2),
                     ),
                     Text(
                       'Next Trip',
@@ -231,7 +237,7 @@ class _HomePageState extends State<HomePage> {
               ),
             ],
           ),
-        )
+        ).animate().fadeIn().slideX(begin: -.4, end: 0, duration: 400.ms)
       ],
     );
   }
