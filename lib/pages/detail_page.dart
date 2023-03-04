@@ -17,7 +17,7 @@ class DetailPage extends StatelessWidget {
     final double height = MediaQuery.of(context).size.height;
 
     return SizedBox(
-      height: height / 1.15,
+      height: height * .8,
       child: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.all(16),
