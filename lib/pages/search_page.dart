@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:ui_pro_2/models/travel_model.dart';
+import 'package:ui_pro_2/pages/detail_page.dart';
 import 'package:ui_pro_2/widgets/search_item_travel.dart';
 
 class SearchPage extends StatelessWidget {
@@ -45,6 +46,11 @@ class SearchPage extends StatelessWidget {
                 return SearchItemTravel(
                   index: index,
                   travelItem: travelItems[index],
+                  onTap: () => showBottomSheet(
+                    context: context,
+                    builder: (context) => const DetailPage(),
+                    backgroundColor: Colors.white,
+                  ),
                 );
               },
             )
