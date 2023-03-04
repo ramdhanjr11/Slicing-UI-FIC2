@@ -43,12 +43,13 @@ class SearchPage extends StatelessWidget {
               shrinkWrap: true,
               primary: false,
               itemBuilder: (context, index) {
+                var travelItem = travelItems[index];
                 return SearchItemTravel(
                   index: index,
-                  travelItem: travelItems[index],
+                  travelItem: travelItem,
                   onTap: () => showBottomSheet(
                     context: context,
-                    builder: (context) => const DetailPage(),
+                    builder: (context) => DetailPage(travelItem: travelItem),
                     backgroundColor: Colors.white,
                   ),
                 );

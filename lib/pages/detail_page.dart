@@ -1,9 +1,15 @@
 import 'package:expandable_text/expandable_text.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:ui_pro_2/models/travel_model.dart';
 
 class DetailPage extends StatelessWidget {
-  const DetailPage({super.key});
+  final TravelModel travelItem;
+
+  const DetailPage({
+    super.key,
+    required this.travelItem,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -18,14 +24,23 @@ class DetailPage extends StatelessWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
-              _buildHeaderDetailSection(context),
+              _buildHeaderDetailSection(context)
+                  .animate()
+                  .fadeIn()
+                  .slideX(begin: -.4, end: .0, duration: 300.ms),
               const SizedBox(height: 24),
-              _buildImageDetailSection(height, width),
+              _buildImageDetailSection(height, width).animate().shimmer(),
               const SizedBox(height: 32),
               _buildIndicatorImageSection(),
               const SizedBox(height: 32),
-              _buildContentTitleSection(context),
+              _buildContentTitleSection(context)
+                  .animate()
+                  .fadeIn()
+                  .slideX(begin: -.4, end: .0, duration: 300.ms),
               _buildContentDetailSection(context)
+                  .animate()
+                  .fadeIn()
+                  .slideY(begin: .6, end: .0, duration: 300.ms)
             ],
           ),
         ),
@@ -64,7 +79,7 @@ class DetailPage extends StatelessWidget {
           Expanded(
             flex: 1,
             child: Text(
-              'Yosemite National Park',
+              travelItem.travelName,
               style: Theme.of(context)
                   .textTheme
                   .titleLarge!
@@ -127,7 +142,7 @@ class DetailPage extends StatelessWidget {
     return ClipRRect(
       borderRadius: BorderRadius.circular(16),
       child: Image.network(
-        travelItems[0].imageUrl,
+        travelItem.imageUrl,
         fit: BoxFit.cover,
         height: height * .45,
         width: width * .7,
@@ -141,7 +156,7 @@ class DetailPage extends StatelessWidget {
         Align(
           alignment: Alignment.center,
           child: Text(
-            'Detail title',
+            travelItem.location,
             style: Theme.of(context)
                 .textTheme
                 .titleLarge!
