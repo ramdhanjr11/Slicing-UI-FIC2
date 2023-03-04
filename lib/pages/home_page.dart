@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:ui_pro_2/models/travel_model.dart';
 import 'package:ui_pro_2/pages/favorite_page.dart';
 import 'package:ui_pro_2/pages/search_page.dart';
@@ -40,17 +41,32 @@ class _HomePageState extends State<HomePage> {
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _bottomNavCurrentIndex,
         onTap: onTapBottomNav,
-        items: const [
+        items: [
           BottomNavigationBarItem(
-            icon: Icon(Icons.home),
+            icon: SvgPicture.asset(
+              'assets/icons/home_icon.svg',
+              height: 18,
+              color:
+                  _bottomNavCurrentIndex == 0 ? Colors.black : Colors.black54,
+            ),
             label: 'Home',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.search),
+            icon: SvgPicture.asset(
+              'assets/icons/search_icon.svg',
+              height: 18,
+              color:
+                  _bottomNavCurrentIndex == 1 ? Colors.black : Colors.black54,
+            ),
             label: 'Search',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.bookmark_outline),
+            icon: SvgPicture.asset(
+              'assets/icons/bookmark_icon.svg',
+              height: 18,
+              color:
+                  _bottomNavCurrentIndex == 2 ? Colors.black : Colors.black54,
+            ),
             label: 'Bookmark',
           )
         ],
