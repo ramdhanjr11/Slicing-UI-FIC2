@@ -1,16 +1,24 @@
-# ui_pro_2
+# UI PRO 1 FIC 2 Project
 
-A new Flutter project.
+## The Flutter project that cloning an UI from figma
+Let me show you my cloning ui from figma into the real app with flutter that is able to run on both android and ios platforms. This is the first design that i cloned from **[Flutter Magic Book](https://www.figma.com/file/PreoFlFsdSfKIGFpNGwaT8/Flutter-MagicBook?node-id=305%3A189&t=vL19qSn0gqQ9jrib-0)**, for more design you are able to visit that link.
 
-## Getting Started
+## Cloning Result
+`=== From this design ===`
 
-This project is a starting point for a Flutter application.
+<img src="assets/docs/pro2_design.png" width="560" height="400"/>
 
-A few resources to get you started if this is your first Flutter project:
+`=== Into ===`
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+| Android                                                                | iOS                                                                |
+| ---------------------------------------------------------------------- | ------------------------------------------------------------------ |
+| <img src="assets/docs/pro2_android_gif.gif" width="250" height="450"/> | <img src="assets/docs/pro2_ios_gif.gif" width="250" height="450"/> |
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## Installing Instruction
+If you would like to **try** this app into your device, please **follow the steps** \: 
+
+1. `Clone` or `Download` this repository then save to your diretory.
+2. Open directory that was downloaded with your `text editor`.
+3. Be sure you are in **UI-PRO-2** `[branch]`, if you are not in **UI-PRO-2** `[branch]`, you can switch to the branch with `git switch UI-PRO-2`.
+4. `Pub get` the project, wait until finished. 
+5. Run.
